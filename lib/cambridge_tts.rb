@@ -5,7 +5,7 @@ require 'mechanize'
 module CambridgeTts
   # Your code goes here...
   class Tts
-    URL_HOST = "http://dictionary.cambridge.org/dictionary/english/"
+    URL_HOST = "http://dictionary.cambridge.org/dictionary/english-chinese-traditional/"
 
     def initialize(text)
       @@mechanize= Mechanize.new
@@ -46,11 +46,11 @@ module CambridgeTts
       str = to_dash(@word)
       begin
         page = @@mechanize.get(URL_HOST+str)
-        data = page.at('#dataset-british')
-        uk_span=data.at('.uk').at('span.sound')
+        data = page.at('#entryContent')
+        uk_span=data.at('.di-info').at('div.sound')
         @link_mp3_uk=uk_span['data-src-mp3']
         @link_ogg_uk=uk_span['data-src-ogg']
-        us_span=data.at('.us').at('span.sound')
+        us_span=data.at('.di-info').at('div.sound')
         @link_mp3_us=us_span['data-src-mp3']
         @link_ogg_us=us_span['data-src-ogg']
       rescue Mechanize::ResponseCodeError => exception
